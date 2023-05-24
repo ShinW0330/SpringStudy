@@ -1,6 +1,7 @@
 package hello.hellospring;
 
 import hello.hellospring.repository.JdbcMemberRepository;
+import hello.hellospring.repository.JdbcTemplateMemberRepository;
 import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
 import hello.hellospring.service.MemberService;
@@ -14,6 +15,7 @@ import javax.sql.DataSource;
 public class SpringConfig {
 
     private DataSource dataSource;
+
     @Autowired
     public SpringConfig(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -21,16 +23,23 @@ public class SpringConfig {
 
 
     @Bean
-    public MemberService memberService(){
+    public MemberService memberService() {
         return new MemberService(memberRepository());
     }
+
     @Bean
-    public MemberRepository memberRepository(){
-        return new JdbcMemberRepository(dataSource);
+    public MemberRepository memberRepository() {
+        return new JdbcTemplateMemberRepository(dataSource);
     }
+}
+
+   /*
+   public MemberRepository memberRepository(){
+        return new JdbcMemberRepository(dataSource);
+    }*/
     /*
     public MemberRepository memberRepository(){
         return new MemoryMemberRepository();
     }
     */
-}
+
